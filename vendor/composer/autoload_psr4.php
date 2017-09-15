@@ -6,10 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'yunwuxin\\' => array($vendorDir . '/yunwuxin/think-social/src'),
+    'think\\worker\\' => array($vendorDir . '/topthink/think-worker/src'),
     'think\\helper\\' => array($vendorDir . '/topthink/think-helper/src'),
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
     'think\\' => array($vendorDir . '/topthink/think-image/src', $baseDir . '/thinkphp/library/think'),
+    'Workerman\\' => array($vendorDir . '/workerman/workerman'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),

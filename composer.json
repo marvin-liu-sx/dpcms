@@ -24,7 +24,8 @@
         "ezyang/htmlpurifier": "^4.9",
         "symfony/console": "^3.3",
         "symfony/var-dumper": "^3.3",
-        "overtrue/wechat": "~3.1"
+        "overtrue/wechat": "~3.1",
+        "yunwuxin/think-social": "^1.0"
     },
     "extra": {
         "think-path": "thinkphp"

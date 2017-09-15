@@ -28,14 +28,16 @@ class Index extends Admin
      */
     public function index()
     {
-        
-        return ZBuilder::make('table')->setPageTitle('微信墙订单')->setPageTips('这是页面提示信息')->fetch();
-//        $this->assign('document', Db::name('cms_document')->where('trash', 0)->count());
-//        $this->assign('column', Db::name('cms_column')->count());
-//        $this->assign('page', Db::name('cms_page')->count());
-//        $this->assign('model', Db::name('cms_model')->count());
-//        $this->assign('page_title', '仪表盘');
-//        return $this->fetch(); // 渲染模板
+        $order=Db::name('wxwall_order')->count();
+        $barrage=Db::name('wxwall_barrage')->count();
+        $wechat_user=Db::name('wxwall_wechat_user')->count();
+        $total=$wechat_user!=0 && $order!=0? ($barrage/$wechat_user)/$order:0;
+        $this->assign('order',$order );
+        $this->assign('barrage', $barrage);
+        $this->assign('wechat_user', $wechat_user);
+        $this->assign('total', $total);
+        $this->assign('page_title', '微信墙订单');
+        return $this->fetch(); // 渲染模板
     }
     
     public function test(){
