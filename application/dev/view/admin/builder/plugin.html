@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="__LIBS__/codemirror/codemirror.css">
+<link rel="stylesheet" href="__LIBS__/codemirror/theme/{:module_config('dev.codemirror_theme')}.css">
+<style>
+	.CodeMirror,#preview_window{
+		width:700px;
+		height:500px;
+	}
+
+	#preview_window textarea{
+		display: none;
+	}
+</style>
+
+<script type="text/javascript" src="__LIBS__/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="__LIBS__/codemirror/xml.js"></script>
+<script type="text/javascript" src="__LIBS__/codemirror/javascript.js"></script>
+<script type="text/javascript" src="__LIBS__/codemirror/clike.js"></script>
+<script type="text/javascript" src="__LIBS__/codemirror/php.js"></script>
+<script type="text/javascript">
+	var theme = '{:module_config('dev.codemirror_theme')}';
+	var preview_url = '{:url('preview_plugin')}';
+    var check_url = '{:url('checkForm', ['type'=>'plugin'])}';
+</script>

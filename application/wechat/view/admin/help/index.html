@@ -1,0 +1,156 @@
+{extend name="./application/admin/view/layout.html" /}
+
+{block name="page-header"}{/block}
+
+{block name="content"}
+<div class="row">
+    <div class="block">
+        <div class="block-content block-content-full block-content-narrow">
+            <h2 class="h3 font-w600 push-30-t push">安装说明</h2>
+            <div id="faq1" class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq1" href="#faq1_q1">简介</a>
+                        </h3>
+                    </div>
+                    <div id="faq1_q1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <p>欢迎使用 <code>WeChat</code> 模块，本模块可以让你快速集成微信开发的核心框架功能到 <code>DolphinPHP</code> 系统，剩下的请根据自己需求开发。</p>
+                            <p>本模块基于 <a href="https://easywechat.org" target="_blank">EasyWeChat</a> 扩展开发，所以你必须对它有所了解。</p>
+                            <p><code>EasyWeChat</code> 是一个开源的微信非官方 SDK。<code>EasyWeChat</code> 安装非常简单，因为它是一个标准的 <code>Composer</code> 包，这意味着任何满足下列安装条件的 PHP 项目支持 Composer 都可以使用它。</p>
+                            <p>环境需求：</p>
+                            <ul>
+                                <li>PHP &gt;= 5.5.9 (其实你不必惊讶，PHP 7 的时代了)</li>
+                                <li><a href="http://php.net/manual/en/book.curl.php" target="_blank" rel="external">PHP cURL 扩展</a></li>
+                                <li><a href="http://php.net/manual/en/book.openssl.php" target="_blank" rel="external">PHP OpenSSL 扩展</a></li>
+                                <li><a href="http://php.net/manual/en/book.fileinfo.php" target="_blank" rel="external">PHP fileinfo 拓展</a> 素材管理模块需要用到</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq1" href="#faq1_q2">第一步：使用Composer安装 EasyWeChat</a>
+                        </h3>
+                    </div>
+                    <div id="faq1_q2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>1. 通过命令行工具进入里的 <code>DolphinPHP</code> 系统根目录，也就是 <code>composer.json</code> 文件所在的目录；</p>
+                            <p>2. 然后执行命令 <code>$ composer require overtrue/wechat:~3.1 -vvv</code> 等待安装完成；</p>
+                            <p>&nbsp;</p>
+                            <p>什么？你的服务器是 <code>Windows</code> ？抱歉，我没在 <code>Windows</code> 跑过 <code>PHP</code>，建议你还是先去看下 <code>Composer</code> 如何在 <code>Windows</code> 上安装的 <a href="http://docs.phpcomposer.com/00-intro.html#Installation-Windows" target="_blank">文档</a>，然后再做上面的步骤吧。 </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq1" href="#faq1_q3">第二步：安装 WeChat 模块</a>
+                        </h3>
+                    </div>
+                    <div id="faq1_q3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>其实如果你能看到这个页面，也就说明 <code>WeChat</code> 模块你已经安装好了，但因为本模块是基于 <code>EasyWeChat</code> 开发的，所以只能放在第二步了。</p>
+                            <p>1. 点击下载 <a href="http://oo7a9bzia.bkt.clouddn.com/wechat.zip" target="_blank">wechat.zip</a> <code>WeChat</code> 模块包；</p>
+                            <p>2. 解压到 <code>wechat</code> 目录中；</p>
+                            <p>3. 把 <code>wechat</code> 目录移动到 <code>DolphinPHP</code> 系统的， <code>application</code> 目录内；</p>
+                            <p>4. 进入 <code>DolphinPHP</code> 系统后台，点击右上角的 <code>清空缓存</code> 按钮；</p>
+                            <p>5. 进入 <code>系统</code> &gt; <code>扩展中心</code> &gt; <code>模块管理</code> 找到 <code>微信</code> 模块，点击 <code>安装</code>；</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="h3 font-w600 push-50-t push">常见问题</h2>
+            <div id="faq2" class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q1">1. 微信模块配置中的备注的“自行扩展时使用”配置是什么意思？</a>
+                        </h3>
+                    </div>
+                    <div id="faq2_q1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>备注了 <code>自行扩展时使用</code> 的配置，说明这些配置并非；<code>EasyWeChat</code>需要的配置，而是为了自己开发相关业务时使用的。调用方式：module_config('wechat.name')</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q2">2. 我的微信公众号还没有认证，开发时怎么测试？</a>
+                        </h3>
+                    </div>
+                    <div id="faq2_q2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>没有经过微信认证的公众号权限很低，只能做一些简单的消息接收与自动回复功能，连模块带自带的素材管理功能都无法使用。</p>
+                            <p>不必烦恼，其实微信有一个测试平台，开放了所有高级权限，<a href="http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login" target="_blank">打开连接</a>，用微信扫一扫即可获得测试用的配置信息。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q3">3. 素材上传时提示“附件类型不正确！”</a>
+                        </h3>
+                    </div>
+                    <div id="faq2_q3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p><code>DolphinPHP</code> 系统安装后，文件上传默认是不允许 <code>mp3</code>、<code>mp4</code> 等类型的，需要添加配置。方法如下：</p>
+                            <p>进入 <code>系统</code> &gt; <code>系统设置</code> &gt; <code>上传</code> 找到 <code>允许上传的文件后缀</code>，添加 <code>mp3</code>、<code>mp4</code>、<code>wma</code>、<code>wav</code>、<code>amr</code> 类型进去即可。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q4">4. 提示“服务器发生错误~”是怎么回事？</a>
+                        </h3>
+                    </div>
+                    <div id="faq2_q4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>1. 可能是你的微信配置错误，请仔细检查！</p>
+                            <p>2. 可能是你的微信公众号没有相关权限！</p>
+                            <p>3. 可能是微信接口每日调用达上限！</p>
+                            <p>4. 可能是素材文件过大，上传超时！</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q5">5. 信公众平台中的“URL(服务器地址)”和“Token(令牌)”是什么？</a>
+                        </h3>
+                    </div>
+                    <div id="faq2_q5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>1. URL(服务器地址)：<code>http://{:request()->header('host')}/wechat.html</code> 此URL只能让微信服务器访问，用浏览器打开是无效的！</p>
+                            <p>2. Token(令牌)可以任意编写，只要保证公众平台里的值和模块配置中的值一直即可。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q6">6. 素材管理支持多图文素材吗？</a>
+                        </h3>
+                    </div>
+                    <div id="faq2_q6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>不支持，本模块只用来一天时间开发，由于时间和精力有限，还请自行改进吧。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+</script>
+{/block}
