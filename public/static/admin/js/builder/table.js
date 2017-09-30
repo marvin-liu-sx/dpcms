@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
         $.fn.editable.defaults.emptytext = '空值';
         // 提交时的额外参数
         $.fn.editable.defaults.params = function (params) {
-            params.table    = $(this).data('table') || '';
+            params._t       = $(this).data('table') || '';
             params.type     = $(this).data('type') || '';
             params.validate = dolphin.validate;
             params.validate_fields = dolphin.validate_fields;
@@ -86,7 +86,7 @@ jQuery(document).ready(function() {
             var self = $(this);
             if (self.data('field') === search_field) {
                 $('#search-btn').html(self.text() + ' <span class="caret"></span>');
-                if (self.text() === '搜索') {
+                if (self.text() === '不限') {
                     $('#search-input').attr('placeholder', search_input_placeholder);
                 } else {
                     $('#search-input').attr('placeholder', '请输入'+self.text());
@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
         var field = $(this).data('field') || '';
         $('#search-field').val(field);
         $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
-        if ($(this).text() === '搜索') {
+        if ($(this).text() === '不限') {
             $('#search-input').attr('placeholder', search_input_placeholder);
         } else {
             $('#search-input').attr('placeholder', '请输入'+$(this).text());
@@ -118,6 +118,17 @@ jQuery(document).ready(function() {
 
             goto($url, _curr_params, true);
         }
+    });
+    $('#search-submit-btn').click(function () {
+        var $url = $('#search-input').data('url');
+        var $filed = $('#search-field').val();
+        var $keyword = $('#search-input').val();
+        var _curr_params = {
+            'search_field': $filed || '',
+            'keyword': $keyword || ''
+        };
+
+        goto($url, _curr_params, true);
     });
 
     // 筛选
@@ -300,10 +311,10 @@ jQuery(document).ready(function() {
         var $switch = $(this);
         var $data = {
             value: $switch.prop('checked'),
-            table: $switch.data('table') || '',
+            _t: $switch.data('table') || '',
             name: $switch.data('field') || '',
             type: 'switch',
-            pk: $switch.data('id') || '',
+            pk: $switch.data('id') || ''
         };
 
         // 发送ajax请求

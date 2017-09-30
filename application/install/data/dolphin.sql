@@ -106,8 +106,8 @@ CREATE TABLE `dp_admin_attachment` (
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
-  `mime` varchar(64) NOT NULL DEFAULT '' COMMENT '文件mime类型',
-  `ext` char(4) NOT NULL DEFAULT '' COMMENT '文件类型',
+  `mime` varchar(128) NOT NULL DEFAULT '' COMMENT '文件mime类型',
+  `ext` char(8) NOT NULL DEFAULT '' COMMENT '文件类型',
   `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
   `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
   `sha1` char(40) NOT NULL DEFAULT '' COMMENT 'sha1 散列值',
@@ -221,6 +221,15 @@ INSERT INTO `dp_admin_hook` VALUES ('5', 'signin_footer', '', '登录页面底�
 INSERT INTO `dp_admin_hook` VALUES ('6', 'signin_captcha', '', '登录页面验证码钩子', '1', '1479269315', '1479269315', '1');
 INSERT INTO `dp_admin_hook` VALUES ('7', 'signin', '', '登录控制器钩子', '1', '1479386875', '1479386875', '1');
 INSERT INTO `dp_admin_hook` VALUES ('8', 'upload_attachment', '', '附件上传钩子', '1', '1501493808', '1501493808', '1');
+INSERT INTO `dp_admin_hook` VALUES ('9', 'page_plugin_js', '', '页面插件js钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('10', 'page_plugin_css', '', '页面插件css钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('11', 'signin_sso', '', '单点登录钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('12', 'signout_sso', '', '单点退出钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('13', 'user_add', '', '添加用户钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('14', 'user_edit', '', '编辑用户钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('15', 'user_delete', '', '删除用户钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('16', 'user_enable', '', '启用用户钩子', '1', '1503633591', '1503633591', '1');
+INSERT INTO `dp_admin_hook` VALUES ('17', 'user_disable', '', '禁用用户钩子', '1', '1503633591', '1503633591', '1');
 
 -- ----------------------------
 -- Table structure for `dp_admin_hook_plugin`

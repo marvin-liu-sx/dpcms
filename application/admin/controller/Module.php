@@ -40,7 +40,7 @@ class Module extends Admin
     public function index($group = 'local', $type = '')
     {
         // 配置分组信息
-        $list_group = ['local' => '本地模块','online'=>'在线模块'];
+        $list_group = ['local' => '本地模块'];
         foreach ($list_group as $key => $value) {
             $tab_list[$key]['title'] = $value;
             $tab_list[$key]['url']   = url('index', ['group' => $key]);
@@ -496,47 +496,54 @@ INFO;
      * @param string $type 类型：disable/enable
      * @param array $record 行为日志内容
      * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
+     * @return void
      */
     public function setStatus($type = '', $record = [])
     {
         $ids = input('param.ids');
-        if (empty($ids)) $this->error('缺少主键');
+        empty($ids) && $this->error('缺少主键');
+
+        $module = ModuleModel::where('id', $ids)->find();
+        $module['system_module'] == 1 && $this->error('禁止操作系统内置模块');
 
         $status = $type == 'enable' ? 1 : 0;
 
         // 将模块对应的菜单禁用或启用
-        $name = ModuleModel::where('id', $ids)->value('name');
         $map = [
-            'pid' => 0,
-            'module' => $name
+            'pid'    => 0,
+            'module' => $module['name']
         ];
         MenuModel::where($map)->setField('status', $status);
 
-        $module_title = ModuleModel::where('id', $ids)->value('title');
-        return parent::setStatus($type, ['module_'.$type, 'admin_module', 0, UID, $module_title]);
+        if (false !== ModuleModel::where('id', $ids)->setField('status', $status)) {
+            // 记录日志
+            call_user_func_array('action_log', ['module_'.$type, 'admin_module', 0, UID, $module['title']]);
+            $this->success('操作成功');
+        } else {
+            $this->error('操作失败');
+        }
     }
 
     /**
      * 禁用模块
      * @param array $record 行为日志内容
      * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
+     * @return void
      */
     public function disable($record = [])
     {
-        return $this->setStatus('disable');
+        $this->setStatus('disable');
     }
 
     /**
      * 启用模块
      * @param array $record 行为日志内容
      * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
+     * @return void
      */
     public function enable($record = [])
     {
-        return $this->setStatus('enable');
+        $this->setStatus('enable');
     }
 
     /**

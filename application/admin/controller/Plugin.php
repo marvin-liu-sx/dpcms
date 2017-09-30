@@ -225,7 +225,7 @@ class Plugin extends Admin
 
         // 获取后台字段信息，并分析
         if (isset($plugin->admin)) {
-            $admin = $this->parseAdmin($plugin->admin, $name);
+            $admin = $this->parseAdmin($plugin->admin);
         } else {
             $admin = $this->parseAdmin();
         }
@@ -249,7 +249,6 @@ class Plugin extends Admin
             ->setTableName($admin['table_name'])
             ->setSearch($admin['search_field'], $admin['search_title']) // 设置搜索框
             ->addOrder($admin['order'])
-            ->addFilter($admin['filter'])
             ->addTopButton('back', [
                 'title' => '返回插件列表',
                 'icon'  => 'fa fa-reply',
@@ -269,6 +268,18 @@ class Plugin extends Admin
                 foreach ($admin['custom_right_buttons'] as $custom) {
                     $builder->addRightButton('custom', $custom);
                 }
+            }
+
+            // 表头筛选
+            if (is_array($admin['filter'])) {
+                foreach ($admin['filter'] as $column => $params) {
+                    $options = isset($params[0]) ? $params[0] : [];
+                    $default = isset($params[1]) ? $params[1] : [];
+                    $type    = isset($params[2]) ? $params[2] : 'checkbox';
+                    $builder->addFilter($column, $options, $default, $type);
+                }
+            } else {
+                $builder->addFilter($admin['filter']);
             }
 
         return $builder
@@ -443,40 +454,63 @@ class Plugin extends Admin
      * @param string $type 状态类型:enable/disable
      * @param array $record 行为日志内容
      * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
+     * @return void
      */
     public function setStatus($type = '', $record = [])
     {
+        $_t  = input('param._t', '');
         $ids = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
-        if (empty($ids)) $this->error('缺少主键');
+        empty($ids) && $this->error('缺少主键');
 
-        $plugins = PluginModel::where('id', 'in', $ids)->value('name');
-        if ($plugins) {
-            HookPluginModel::$type($plugins);
+        $status = $type == 'enable' ? 1 : 0;
+
+        if ($_t != '') {
+            parent::setStatus($type, $record);
+        } else {
+            $plugins = PluginModel::where('id', 'in', $ids)->value('name');
+            if ($plugins) {
+                HookPluginModel::$type($plugins);
+            }
+
+            if (false !== PluginModel::where('id', 'in', $ids)->setField('status', $status)) {
+                $this->success('操作成功');
+            } else {
+                $this->error('操作失败');
+            }
         }
-        return parent::setStatus($type);
     }
 
     /**
-     * 禁用插件
+     * 禁用插件/禁用插件数据
      * @param array $record 行为日志内容
      * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
+     * @return void
      */
     public function disable($record = [])
     {
-        return $this->setStatus('disable');
+        $this->setStatus('disable');
     }
 
     /**
-     * 启用插件
+     * 启用插件/启用插件数据
      * @param array $record 行为日志内容
      * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
+     * @return void
      */
     public function enable($record = [])
     {
-        return $this->setStatus('enable');
+        $this->setStatus('enable');
+    }
+
+    /**
+     * 删除插件数据
+     * @param array $record
+     * @author 蔡伟明 <314013107@qq.com>
+     * @return void
+     */
+    public function delete($record = [])
+    {
+        $this->setStatus('delete');
     }
 
     /**

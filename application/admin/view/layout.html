@@ -74,6 +74,9 @@
     {/notempty}
     <!-- END Stylesheets -->
 
+    <!--插件css钩子-->
+    {:hook('page_plugin_css')}
+
     <!--自定义css-->
     <link rel="stylesheet" href="__ADMIN_CSS__/custom.css">
     <script>
@@ -81,20 +84,20 @@
         var dolphin = {
             'top_menu_url': '{:url("admin/ajax/getSidebarMenu")}',
             'theme_url': '{:url("admin/ajax/setTheme")}',
-            'jcrop_upload_url': '{:url("admin/attachment/upload", ["dir" => "images", "from" => "jcrop", "module" => request()->module()])}',
-            'editormd_upload_url': '{:url("admin/attachment/upload", ["dir" => "images", "from" => "editormd", "module" => request()->module()])}',
+            'jcrop_upload_url': '{$jcrop_upload_url ? $jcrop_upload_url : url("admin/attachment/upload", ["dir" => "images", "from" => "jcrop", "module" => request()->module()])}',
+            'editormd_upload_url': '{$editormd_upload_url ? $editormd_upload_url : url("admin/attachment/upload", ["dir" => "images", "from" => "editormd", "module" => request()->module()])}',
             'editormd_mudule_path': '__LIBS__/editormd/lib/',
-            'ueditor_upload_url': '{:url("admin/attachment/upload", ["dir" => "images", "from" => "ueditor", "module" => request()->module()])}',
-            'wangeditor_upload_url': '{:url("admin/attachment/upload", ["dir" => "images", "from" => "wangeditor", "module" => request()->module()])}',
+            'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("admin/attachment/upload", ["dir" => "images", "from" => "ueditor", "module" => request()->module()])}',
+            'wangeditor_upload_url': '{$wangeditor_upload_url ? $wangeditor_upload_url : url("admin/attachment/upload", ["dir" => "images", "from" => "wangeditor", "module" => request()->module()])}',
             'wangeditor_emotions': "__LIBS__/wang-editor/emotions.data",
-            'ckeditor_img_upload_url': '{:url("admin/attachment/upload", ["dir" => "images", "from" => "ckeditor", "module" => request()->module()])}',
+            'ckeditor_img_upload_url': '{$ckeditor_img_upload_url ? $ckeditor_img_upload_url : url("admin/attachment/upload", ["dir" => "images", "from" => "ckeditor", "module" => request()->module()])}',
             'WebUploader_swf': '__LIBS__/webuploader/Uploader.swf',
-            'file_upload_url': '{:url("admin/attachment/upload", ["dir" => "files", "module" => request()->module()])}',
-            'image_upload_url': '{:url("admin/attachment/upload", ["dir" => "images", "module" => request()->module()])}',
-            'upload_check_url': '{:url("admin/ajax/check")}',
+            'file_upload_url': '{$file_upload_url ? $file_upload_url : url("admin/attachment/upload", ["dir" => "files", "module" => request()->module()])}',
+            'image_upload_url': '{$image_upload_url ? $image_upload_url : url("admin/attachment/upload", ["dir" => "images", "module" => request()->module()])}',
+            'upload_check_url': '{$upload_check_url ? $upload_check_url : url("admin/ajax/check")}',
             'get_level_data': '{:url("admin/ajax/getLevelData")}',
-            'quick_edit_url': '{:url("quickEdit")}',
-            'aside_edit_url': '{:url("admin/system/quickEdit")}',
+            'quick_edit_url': '{$quick_edit_url ? $quick_edit_url : url("quickEdit")}',
+            'aside_edit_url': '{$aside_edit_url ? $aside_edit_url : url("admin/system/quickEdit")}',
             'triggers': {$field_triggers|default=[]|json_encode}, // 触发器集合
             'field_hide': '{$field_hide|default=""}', // 需要隐藏的字段
             'field_values': '{$field_values|default=""}',
@@ -115,7 +118,7 @@
 </head>
 <body>
 <!-- Page Container -->
-<div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed {empty name="_pop"}{$_COOKIE['sidebarMini'] == 'true' ?= 'sidebar-mini'}{/empty}">
+<div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed {empty name="_pop"}{$_COOKIE['sidebarMini'] ?= 'sidebar-mini'}{/empty}">
     <!-- Side Overlay-->
     {empty name="_pop"}
     {block name="aside"}
@@ -129,7 +132,7 @@
                     <i class="fa fa-times"></i>
                 </button>
                 <span>
-                    <img class="img-avatar img-avatar32" src="__ADMIN_IMG__/avatar.jpg" alt="">
+                    <img class="img-avatar img-avatar32" src="{$Think.session.user_auth.uid|get_avatar}" alt="">
                     <span class="font-w600 push-10-l">{:session('user_auth.username')}</span>
                 </span>
             </div>
@@ -256,7 +259,7 @@
             <li>
                 <div class="btn-group">
                     <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
-                        <img src="{$Think.session.user_auth.avatar|get_avatar}" alt="{:session('user_auth.username')}">
+                        <img src="{$Think.session.user_auth.uid|get_avatar}" alt="{:session('user_auth.username')}">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -281,7 +284,7 @@
                 </a>
             </li>
             <li>
-                <a class="btn btn-default" href="/index.php" target="_blank" data-toggle="tooltip" data-placement="bottom" data-original-title="打开前台">
+                <a class="btn btn-default" href="{:rtrim(home_url('/'), '/')}" target="_blank" data-toggle="tooltip" data-placement="bottom" data-original-title="打开前台">
                     <i class="fa fa-external-link-square"></i>
                 </a>
             </li>
@@ -463,6 +466,9 @@
 
 <!--页面js-->
 {block name="script"}{/block}
+
+<!--插件js钩子-->
+{:hook('page_plugin_js')}
 
 {// 额外HTML代码 }
 {$extra_html|default=''}
