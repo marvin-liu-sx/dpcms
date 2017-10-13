@@ -147,4 +147,12 @@ return [
     ],
     'action' => [],
     'access' => [],
+    'home'=>[
+        'ischild'=>0,
+        'parent'=>0,
+        'domain'=>'',
+        'menu'=>'index/index',
+        'menu_title'=>'wxwall',
+        'menu_order'=>'0',
+    ]
 ];
